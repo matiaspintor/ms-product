@@ -3,12 +3,10 @@ server:
 spring:
   h2:
     console:
-      enabled: true
+      enabled: false
   jackson:
     deserialization:
       fail-on-unknown-properties: true
-    serialization:
-      WRITE_DATES_AS_TIMESTAMPS: false
   datasource:
     url: jdbc:h2:mem:product-db
     username: spring-usr
@@ -18,14 +16,7 @@ spring:
       connectionTimeout: 10000
       maximumPoolSize: 10
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
       
-      
-# Custom H2 Console UR
-#spring.h2.console.path=/h2-console
-# Whether to enable trace output.
-#spring.h2.console.settings.trace=false
-# Whether to enable remote access.
-#spring.h2.console.settings.web-allow-others=false
