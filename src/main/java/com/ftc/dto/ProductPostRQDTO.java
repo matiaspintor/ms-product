@@ -5,6 +5,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -49,8 +50,11 @@ public class ProductPostRQDTO {
 
   @JsonProperty(value = "principalImage")
   @NotNull(message = "The field [principalImage] cannot be null.")
+  @Pattern(regexp = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)", 
+  message = "The [principalImage] field has to be a valid url.")
   private String principalImage;
 
   @JsonProperty(value = "otherImages")
-  private List<String> otherImages;
+  private List<@Pattern(regexp = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)", 
+      message = "The [otherImages] field has to be a valid url.") String> otherImages;
 }
