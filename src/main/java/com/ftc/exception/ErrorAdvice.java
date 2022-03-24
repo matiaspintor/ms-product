@@ -27,7 +27,7 @@ public class ErrorAdvice {
 		details.add(exception.getLocalizedMessage());
 		ErrorResponse error = new ErrorResponse("Resource not found", details);
 		ResponseEntity<Object> errorResponse = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-		log.warn("Resource not found: ", exception);
+		log.warn("Resource not found: " + details.toString());
 		return errorResponse;
 	}
 	
@@ -37,7 +37,7 @@ public class ErrorAdvice {
         details.add(exception.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse("Input data error", details);
         ResponseEntity<Object> errorResponse = new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-        log.error("Input data error: ", exception.getLocalizedMessage());
+        log.error("Input data error: " + details.toString());
         return errorResponse;
     }
 
@@ -47,7 +47,7 @@ public class ErrorAdvice {
 		details.add(exception.getLocalizedMessage());
 		ErrorResponse error = new ErrorResponse("Conflict", details);
 		ResponseEntity<Object> errorResponse = new ResponseEntity<>(error, HttpStatus.CONFLICT);
-		log.warn("Conflict: ", exception.getLocalizedMessage());
+		log.warn("Conflict: " + details.toString());
 		return errorResponse;
 	}
 
@@ -67,8 +67,8 @@ public class ErrorAdvice {
 		for (ObjectError error : exception.getBindingResult().getAllErrors()) {
 			details.add(error.getDefaultMessage());
 		}
-		ErrorResponse error = new ErrorResponse("Argument not valid", details);
-	    log.warn("Argument not valid: ", details);
+		ErrorResponse error = new ErrorResponse("Input not valid", details);
+	    log.warn("Argument not valid: ", details.toString());
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
@@ -99,7 +99,7 @@ public class ErrorAdvice {
 		List<String> details = new ArrayList<>();
 		details.add("The method you are querying requires a valid JSON in the body of the Http request");
 		ErrorResponse error = new ErrorResponse("Input data error: ", details);
-		log.error("Input JSON error: ", details);
+		log.warn("Input JSON error: " + details.toString());
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 

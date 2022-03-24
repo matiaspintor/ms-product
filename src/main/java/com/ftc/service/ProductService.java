@@ -1,25 +1,24 @@
 package com.ftc.service;
 
-import java.util.List;
 import com.ftc.dto.ProductListGetRQDTO;
+import com.ftc.dto.ProductListGetRSDTO;
 import com.ftc.dto.ProductPatchRQDTO;
 import com.ftc.dto.ProductPatchRSDTO;
 import com.ftc.dto.ProductByIdGetRQDTO;
-import com.ftc.dto.ProductDeleteRQDTO;
 import com.ftc.dto.ProductGetRSDTO;
 import com.ftc.dto.ProductPostRQDTO;
 import com.ftc.dto.ProductPostRSDTO;
 
 public interface ProductService {
 
-  ProductPostRSDTO newProduct(ProductPostRQDTO product);
+  ProductPostRSDTO newProduct(ProductPostRQDTO productDTO);
 
-  List<ProductGetRSDTO> listAll(ProductListGetRQDTO filter);
+  ProductListGetRSDTO listAll(ProductListGetRQDTO filter);
 
-  ProductGetRSDTO findById(ProductByIdGetRQDTO productId);
+  ProductGetRSDTO findBySku(ProductByIdGetRQDTO skuDTO);
 
-  ProductPatchRSDTO update(ProductPatchRQDTO product);
+  ProductPatchRSDTO update(String sku, ProductPatchRQDTO productDTO);
 
-  void delete(ProductDeleteRQDTO productId);
+  void delete(String sku);
 
 }

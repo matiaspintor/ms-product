@@ -1,0 +1,31 @@
+server:
+  port: 8080
+spring:
+  h2:
+    console:
+      enabled: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  datasource:
+    url: jdbc:h2:mem:product-db
+    username: spring-usr
+    password: 12345678
+    driverClassName: org.h2.Driver
+    hikari:
+      connectionTimeout: 10000
+      maximumPoolSize: 10
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      
+      
+# Custom H2 Console UR
+#spring.h2.console.path=/h2-console
+# Whether to enable trace output.
+#spring.h2.console.settings.trace=false
+# Whether to enable remote access.
+#spring.h2.console.settings.web-allow-others=false

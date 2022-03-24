@@ -2,6 +2,7 @@ package com.ftc.entity;
 
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -39,6 +40,7 @@ public class Product {
   @Column(name = "principal_image", nullable = false)
   private String principalImage;
   
-  @Column(name = "other_images", nullable = true)
+  @Column(name = "other_image", nullable = true)
+  @ElementCollection()
   private List<String> otherImages;
 }
