@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import java.util.Arrays;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,8 @@ import com.ftc.dto.ProductByIdGetRQDTO;
 import com.ftc.dto.ProductGetRSDTO;
 import com.ftc.dto.ProductListGetRQDTO;
 import com.ftc.dto.ProductListGetRSDTO;
+import com.ftc.dto.ProductPatchRQDTO;
+import com.ftc.dto.ProductPatchRSDTO;
 import com.ftc.dto.ProductPostRQDTO;
 import com.ftc.dto.ProductPostRSDTO;
 import com.ftc.entity.Product;
@@ -170,6 +175,87 @@ class ProductServiceTest {
     assertThrows(NotFoundException.class, ()->{
       this.productService.findBySku(skuDTO);    
     });
-
+  }
+  
+  @Test()
+  void testUpdateHappyCaseModifyBrandAndPrice() {
+    String sku = "FAL-881952283";
+    ProductPatchRQDTO productDTO = ProductPatchRQDTO.builder()
+        .brand("Biker")
+        .price(602000.00)
+        .build();
+    
+    Product productRegistered = Product.builder()
+        .sku("FAL-881952283")
+        .name("Bicicleta Baltoro Aro 29")
+        .brand("Jeep")
+        .size("ST")
+        .price(399990.00)
+        .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
+        .build();
+    
+    doReturn(Optional.of(productRegistered)).when(this.productRepository).findBySkuIgnoreCase(Mockito.anyString()); 
+    doReturn(productRegistered).when(this.productRepository).save(Mockito.any());
+    
+    ProductPatchRSDTO result = this.productService.update(sku, productDTO);
+    assertNotNull(result);
+    assertEquals("Biker", result.getBrand());
+    assertEquals(602000D, result.getPrice());
+    assertNotNull(result.getSku());
+    assertEquals("FAL-881952283", result.getSku());
+    assertNotNull(result.getName());
+    assertEquals("ST", result.getSize());
+    assertNotNull(result.getPrincipalImage());
+    verify(this.productRepository, times(1)).save(productRegistered);
+  }
+  
+  @Test()
+  void testUpdateSkuNotFound() {
+    String sku = "FAL-881952283";
+    ProductPatchRQDTO productDTO = ProductPatchRQDTO.builder()
+        .brand("Biker")
+        .price(602000.00)
+        .build();
+    
+    doReturn(Optional.empty()).when(this.productRepository).findBySkuIgnoreCase(Mockito.anyString()); 
+    assertThrows(NotFoundException.class, ()->{
+      this.productService.update(sku, productDTO);
+      verify(this.productRepository, times(0)).save(Mockito.any());
+    });
+  }
+  
+  @Test()
+  void testDeleteHappyCase() {
+    String sku = "FAL-881952283";
+    Product productRegistered = Product.builder()
+        .sku("FAL-881952283")
+        .name("Bicicleta Baltoro Aro 29")
+        .brand("Jeep")
+        .size("ST")
+        .price(399990.00)
+        .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
+        .build();
+    
+    doReturn(Optional.of(productRegistered)).when(this.productRepository).findBySkuIgnoreCase(Mockito.anyString());
+    doNothing().when(this.productRepository).delete(Mockito.any());
+    
+    this.productService.delete(sku);
+    verify(this.productRepository, times(1)).delete(productRegistered);
+    
+  }
+  
+  @Test()
+  void testDeleteSkuNotFound() {
+    String sku = "FAL-881952283";
+    
+    doReturn(Optional.empty()).when(this.productRepository).findBySkuIgnoreCase(Mockito.anyString());
+    doNothing().when(this.productRepository).delete(Mockito.any());
+    
+    assertThrows(NotFoundException.class, ()->{
+      this.productService.delete(sku);
+      verify(this.productRepository, times(0)).delete(Mockito.any());
+    });
+    
+    
   }
 }
