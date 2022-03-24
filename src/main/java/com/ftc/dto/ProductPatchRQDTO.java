@@ -3,6 +3,7 @@ package com.ftc.dto;
 import java.util.List;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -35,8 +36,11 @@ public class ProductPatchRQDTO {
   private Double price;
 
   @JsonProperty(value = "principalImage")
+  @Pattern(regexp = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)", 
+  message = "The [principalImage] field has to be a valid url.")
   private String principalImage;
 
   @JsonProperty(value = "otherImages")
-  private List<String> otherImages;
+  private List<@Pattern(regexp = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)", 
+      message = "The [otherImages] field has to be a valid url.") String> otherImages;
 }
