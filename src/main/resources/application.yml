@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  h2:
+    console:
+      enabled: false
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  datasource:
+    url: jdbc:h2:mem:product-db
+    username: spring-usr
+    password: 12345678
+    driverClassName: org.h2.Driver
+    hikari:
+      connectionTimeout: 10000
+      maximumPoolSize: 10
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+      
