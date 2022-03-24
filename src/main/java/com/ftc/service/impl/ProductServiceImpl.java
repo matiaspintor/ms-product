@@ -25,17 +25,17 @@ import com.ftc.repository.ProductRepository;
 import com.ftc.service.ProductService;
 
 @Service()
-public class ProductServiceImpl implements ProductService{
-  
+public class ProductServiceImpl implements ProductService {
+
   @Autowired
   private ProductRepository productRepository;
-  
+
   @Autowired
   private ModelMapper modelMapper;
 
   @Override
   public ProductPostRSDTO newProduct(ProductPostRQDTO productDTO) {
-    if(this.productRepository.findBySkuIgnoreCase(productDTO.getSku()).isEmpty()) {
+    if (this.productRepository.findBySkuIgnoreCase(productDTO.getSku()).isEmpty()) {
       Product product = this.modelMapper.map(productDTO, Product.class);
       this.productRepository.save(product);
       return this.modelMapper.map(product, ProductPostRSDTO.class);
@@ -45,27 +45,22 @@ public class ProductServiceImpl implements ProductService{
 
   @Override
   public ProductListGetRSDTO listAll(ProductListGetRQDTO filter) {
-    Pageable page = 
-        PageRequest.of(0, Integer.MAX_VALUE);
-    if(filter.getPage() != null && filter.getSize() != null) {
-      page = 
-          PageRequest.of(filter.getPage(), filter.getSize());   
+    Pageable page = PageRequest.of(0, Integer.MAX_VALUE);
+    if (filter.getPage() != null && filter.getSize() != null) {
+      page = PageRequest.of(filter.getPage(), filter.getSize());
     }
-   Page<Product> pageProducts = this.productRepository.findAll(page);
+    Page<Product> pageProducts = this.productRepository.findAll(page);
     return this.convertProductPageToResponse(pageProducts);
   }
 
   private ProductListGetRSDTO convertProductPageToResponse(Page<Product> pageProducts) {
     List<ProductGetRSDTO> listProducts = this.modelMapper.map(pageProducts.getContent(),
         new TypeToken<List<ProductGetRSDTO>>() {}.getType());
-    return ProductListGetRSDTO.builder()
-    .currentPage(pageProducts.getNumber())
-    .totalItems(pageProducts.getTotalElements())
-    .totalPages(pageProducts.getTotalPages())
-    .products(listProducts)
-    .build(); 
+    return ProductListGetRSDTO.builder().currentPage(pageProducts.getNumber())
+        .totalItems(pageProducts.getTotalElements()).totalPages(pageProducts.getTotalPages())
+        .products(listProducts).build();
   }
-  
+
   @Override
   public ProductGetRSDTO findBySku(ProductByIdGetRQDTO skuDTO) {
     Product productFinded = this.productRepository.findBySkuIgnoreCase(skuDTO.getSku())
@@ -79,7 +74,7 @@ public class ProductServiceImpl implements ProductService{
         .orElseThrow(() -> new NotFoundException("The sku is not registered."));
     this.modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
     this.modelMapper.map(productDTO, product);
-    if(productDTO.getOtherImages() != null && productDTO.getOtherImages().isEmpty()) {
+    if (productDTO.getOtherImages() != null && productDTO.getOtherImages().isEmpty()) {
       product.setOtherImages(Collections.emptyList());
     }
     this.productRepository.save(product);

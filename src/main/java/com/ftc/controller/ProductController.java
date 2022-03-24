@@ -28,40 +28,42 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(path = "/products")
 @Slf4j
 public class ProductController {
-  
+
   @Autowired
   private ProductService productService;
-  
+
   @PostMapping()
-  public ResponseEntity<ProductPostRSDTO> newProduct(@RequestBody() @Valid() ProductPostRQDTO product){
-    
+  public ResponseEntity<ProductPostRSDTO> newProduct(
+      @RequestBody() @Valid() ProductPostRQDTO product) {
     log.info("POST: product");
     return ResponseEntity.status(HttpStatus.CREATED).body(this.productService.newProduct(product));
   }
-  
+
   @GetMapping()
   public ResponseEntity<ProductListGetRSDTO> findAll(
       @RequestParam(required = false, name = "page") Integer page,
-      @RequestParam(required = false, name = "size") Integer size,
-      ProductListGetRQDTO productRQ
-      ){
+      @RequestParam(required = false, name = "size") Integer size, ProductListGetRQDTO productRQ) {
+    log.info("GET: product find all");
     return ResponseEntity.status(HttpStatus.OK).body(this.productService.listAll(productRQ));
   }
-  
+
   @GetMapping(path = {"/{sku}"})
   public ResponseEntity<ProductGetRSDTO> findById(@PathVariable(name = "sku") String sku,
       @Valid ProductByIdGetRQDTO productDTO) {
+    log.info("GET: product find by id");
     return ResponseEntity.status(HttpStatus.OK).body(this.productService.findBySku(productDTO));
   }
-  
+
   @PatchMapping(path = {"/{sku}"})
   public ResponseEntity<ProductPatchRSDTO> update(@PathVariable(name = "sku") String sku,
-      @RequestBody() @Valid() ProductPatchRQDTO productDTO){
+      @RequestBody() @Valid() ProductPatchRQDTO productDTO) {
+    log.info("PATCH: product update");
     return ResponseEntity.status(HttpStatus.OK).body(this.productService.update(sku, productDTO));
   }
-  
-  @DeleteMapping(path =  {"/{sku}"})
-  public ResponseEntity<Void> delete(@PathVariable(name = "sku") String sku){
+
+  @DeleteMapping(path = {"/{sku}"})
+  public ResponseEntity<Void> delete(@PathVariable(name = "sku") String sku) {
+    log.info("DELETE: product");
     this.productService.delete(sku);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }

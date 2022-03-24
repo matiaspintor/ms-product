@@ -24,22 +24,22 @@ public class Product {
   @Id
   @Column(name = "sku", nullable = false)
   private String sku;
-  
+
   @Column(name = "name", nullable = false, length = 50)
   private String name;
-  
+
   @Column(name = "brand", nullable = false, length = 50)
   private String brand;
-  
+
   @Column(name = "size", nullable = true)
   private String size;
-  
+
   @Column(name = "price", nullable = false, precision = 2)
   private Double price;
-  
+
   @Column(name = "principal_image", nullable = false)
   private String principalImage;
-  
+
   @Column(name = "other_image", nullable = true)
   @ElementCollection()
   private List<String> otherImages;

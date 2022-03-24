@@ -15,7 +15,7 @@ import lombok.Setter;
 public class ProductListGetRQDTO {
   @JsonProperty(value = "size")
   private Integer size;
-  
+
   @JsonProperty(value = "page")
   private Integer page;
 }

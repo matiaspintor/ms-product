@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder()
 @AllArgsConstructor()
 @NoArgsConstructor()
-public class ProductListGetRSDTO extends PageableBaseRSDTO{
+public class ProductListGetRSDTO extends PageableBaseRSDTO {
 
   private List<ProductGetRSDTO> products;
 }

@@ -17,26 +17,27 @@ import lombok.Setter;
 @AllArgsConstructor()
 @NoArgsConstructor()
 @JsonInclude(Include.NON_NULL)
-@JsonPropertyOrder(value = {"sku", "name", "brand", "size", "price", "principalImage", "otherImages"})
+@JsonPropertyOrder(
+    value = {"sku", "name", "brand", "size", "price", "principalImage", "otherImages"})
 public class ProductPatchRSDTO {
   @JsonProperty(value = "sku")
   private String sku;
-  
+
   @JsonProperty(value = "name")
   private String name;
-  
+
   @JsonProperty(value = "brand")
   private String brand;
-  
+
   @JsonProperty(value = "size")
   private String size;
-  
+
   @JsonProperty(value = "price")
   private Double price;
-  
+
   @JsonProperty(value = "principalImage")
   private String principalImage;
-  
+
   @JsonProperty(value = "otherImages")
   private List<String> otherImages;
 }

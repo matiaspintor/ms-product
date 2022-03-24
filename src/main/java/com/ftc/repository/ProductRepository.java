@@ -11,7 +11,7 @@ import com.ftc.entity.Product;
 public interface ProductRepository extends PagingAndSortingRepository<Product, String> {
 
   Page<Product> findAll(Pageable page);
-  
+
   Optional<Product> findBySkuIgnoreCase(String sku);
-  
+
 }
