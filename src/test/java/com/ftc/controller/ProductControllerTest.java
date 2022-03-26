@@ -14,6 +14,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.ftc.dto.ProductPatchRQDTO;
@@ -44,7 +47,7 @@ class ProductControllerTest {
         .name("Bicicleta Baltoro Aro 29")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
 
@@ -117,7 +120,7 @@ class ProductControllerTest {
         .name("Bicicleta Baltoro Aro 29 - modify")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     
@@ -136,7 +139,7 @@ class ProductControllerTest {
         .name("Bicicleta Baltoro Aro 29 - modify")
         .brand("Jeep")
         .size("ST")
-        .price(.0)
+        .price(new BigDecimal(0))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     

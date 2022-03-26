@@ -1,5 +1,6 @@
 package com.ftc.entity;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -34,8 +35,8 @@ public class Product {
   @Column(name = "size", nullable = true)
   private String size;
 
-  @Column(name = "price", nullable = false, precision = 2)
-  private Double price;
+  @Column(name = "price", nullable = false)
+  private BigDecimal price;
 
   @Column(name = "principal_image", nullable = false)
   private String principalImage;

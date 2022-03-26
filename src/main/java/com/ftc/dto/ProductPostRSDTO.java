@@ -1,5 +1,6 @@
 package com.ftc.dto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -34,7 +35,7 @@ public class ProductPostRSDTO {
   private String size;
 
   @JsonProperty(value = "price")
-  private Double price;
+  private BigDecimal price;
 
   @JsonProperty(value = "principalImage")
   private String principalImage;

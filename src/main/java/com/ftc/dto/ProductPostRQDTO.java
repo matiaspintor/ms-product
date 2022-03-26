@@ -1,5 +1,6 @@
 package com.ftc.dto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -46,7 +47,7 @@ public class ProductPostRQDTO {
   @NotNull(message = "The field [price] cannot be null.")
   @Min(value = 1, message = "The field [price] must have a minimum value of 1.00")
   @Max(value = 99999999, message = "The field [price] must have a maximum value of 99999999.00")
-  private Double price;
+  private BigDecimal price;
 
   @JsonProperty(value = "principalImage")
   @NotNull(message = "The field [principalImage] cannot be null.")
