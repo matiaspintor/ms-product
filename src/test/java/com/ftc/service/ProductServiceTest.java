@@ -9,6 +9,8 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -55,7 +57,7 @@ class ProductServiceTest {
         .name("Bicicleta Baltoro Aro 29")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     
@@ -67,7 +69,7 @@ class ProductServiceTest {
     assertEquals("Bicicleta Baltoro Aro 29", result.getName());
     assertEquals("Jeep", result.getBrand());
     assertEquals("ST", result.getSize());
-    assertEquals(399990.00, result.getPrice());
+    assertEquals(new BigDecimal(399990.00), result.getPrice());
     assertNull(result.getOtherImages());
     assertNotNull(result.getPrincipalImage());
   }
@@ -79,7 +81,7 @@ class ProductServiceTest {
         .name("Bicicleta Baltoro Aro 29")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     
@@ -98,7 +100,7 @@ class ProductServiceTest {
         .name("Bicicleta Baltoro Aro 29")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     Page<Product> pageProducts = new PageImpl<Product>(
@@ -120,7 +122,7 @@ class ProductServiceTest {
         .name("Bicicleta Baltoro Aro 29")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     Page<Product> pageProducts = new PageImpl<Product>(
@@ -146,7 +148,7 @@ class ProductServiceTest {
         .name("Bicicleta Baltoro Aro 29")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     
@@ -158,7 +160,7 @@ class ProductServiceTest {
     assertEquals("Bicicleta Baltoro Aro 29", result.getName());
     assertEquals("Jeep", result.getBrand());
     assertEquals("ST", result.getSize());
-    assertEquals(399990.00, result.getPrice());
+    assertEquals(new BigDecimal(399990.00), result.getPrice());
     assertNull(result.getOtherImages());
     assertNotNull(result.getPrincipalImage());
     
@@ -182,7 +184,7 @@ class ProductServiceTest {
     String sku = "FAL-881952283";
     ProductPatchRQDTO productDTO = ProductPatchRQDTO.builder()
         .brand("Biker")
-        .price(602000.00)
+        .price(new BigDecimal(602000.00))
         .build();
     
     Product productRegistered = Product.builder()
@@ -190,7 +192,7 @@ class ProductServiceTest {
         .name("Bicicleta Baltoro Aro 29")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     
@@ -200,7 +202,7 @@ class ProductServiceTest {
     ProductPatchRSDTO result = this.productService.update(sku, productDTO);
     assertNotNull(result);
     assertEquals("Biker", result.getBrand());
-    assertEquals(602000D, result.getPrice());
+    assertEquals(new BigDecimal(602000.00), result.getPrice());
     assertNotNull(result.getSku());
     assertEquals("FAL-881952283", result.getSku());
     assertNotNull(result.getName());
@@ -214,7 +216,7 @@ class ProductServiceTest {
     String sku = "FAL-881952283";
     ProductPatchRQDTO productDTO = ProductPatchRQDTO.builder()
         .brand("Biker")
-        .price(602000.00)
+        .price(new BigDecimal(602000.00))
         .build();
     
     doReturn(Optional.empty()).when(this.productRepository).findBySkuIgnoreCase(Mockito.anyString()); 
@@ -232,7 +234,7 @@ class ProductServiceTest {
         .name("Bicicleta Baltoro Aro 29")
         .brand("Jeep")
         .size("ST")
-        .price(399990.00)
+        .price(new BigDecimal(399990.00))
         .principalImage("https://falabella.scene7.com/is/image/Falabella/881952283_2")
         .build();
     
@@ -255,7 +257,5 @@ class ProductServiceTest {
       this.productService.delete(sku);
       verify(this.productRepository, times(0)).delete(Mockito.any());
     });
-    
-    
   }
 }
